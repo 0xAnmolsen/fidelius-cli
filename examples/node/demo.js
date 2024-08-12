@@ -63,7 +63,6 @@ const encryptData = ({
 	);
 	const result = execFideliusCli(["-f", paramsFilePath]);
 	//removeFileAtPath(paramsFilePath);
-	console.log({ encryptedData: result?.encryptedData });
 	return result;
 };
 
@@ -86,7 +85,6 @@ const saneEncryptData = ({
 	);
 	const result = execFideliusCli(["-f", paramsFilePath]);
 	removeFileAtPath(paramsFilePath);
-	console.log({ encryptedData: result?.encryptedData });
 	return result;
 };
 
@@ -106,8 +104,7 @@ const decryptData = ({
 		senderPublicKey
 	);
 	const result = execFideliusCli(["-f", paramsFilePath]);
-	//removeFileAtPath(paramsFilePath);
-	console.log({ decryptedData: result?.decryptedData });
+	removeFileAtPath(paramsFilePath);
 	return result;
 };
 
@@ -152,7 +149,7 @@ const runExample = ({ stringToEncrypt }) => {
 		requesterNonce: requesterKeyMaterial.nonce,
 		senderNonce: senderKeyMaterial.nonce,
 		requesterPrivateKey: requesterKeyMaterial.privateKey,
-		senderPublicKey: requesterKeyMaterial.x509PublicKey,
+		senderPublicKey: senderKeyMaterial.x509PublicKey,
 	});
 
 	console.log({
@@ -162,14 +159,5 @@ const runExample = ({ stringToEncrypt }) => {
 	});
 };
 
-// Export the functions
-module.exports = {
-	getEcdhKeyMaterial,
-	encryptData,
-	saneEncryptData,
-	decryptData,
-	runExample,
-};
 
-// Run the example
-runExample({ stringToEncrypt: '{"user":{"id":12345,"name":"John Doe","email":"johndoe@example.com","address":{"street":"123 Main St","city":"Metropolis","state":"NY","zip":"12345"}},"order":{"id":67890,"date":"2024-08-12","items":[{"productId":9876,"productName":"Super Widget","quantity":3,"price":19.99},{"productId":5432,"productName":"Mega Gadget","quantity":1,"price":99.99}],"total":159.96},"payment":{"method":"Credit Card","status":"Completed"}}' });
+runExample({ stringToEncrypt: '{"user":{"id":12345,"name":"John Doe","email":"johndoe@example.com","address":{"street":"123 Main St","city":"Metropolis","state":"NY","zip":"12345"}},"order":{"id":67890,"date":"2024-08-12","items":[{"productId":9876,"productName":"Super Widget","quantity":3,"price":19.99},{"productId":5432,"productName":"Mega Gadget","quantity":1,"price":99.99}],"total":159.96},"payment":{"method":"Credit Card","status":"Completed"}}'});
